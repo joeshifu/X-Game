@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\XPage\XPageMgr.cs">
+    <Files>
+      <File FileName="Assets\Scripts\XPage\XPageMgr.cs" Line="111" Column="47" />
+      <File FileName="Assets\LuaFramework\Scripts\Controller\Command\StartVersionMgrCommand.cs" Line="81" Column="27" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
