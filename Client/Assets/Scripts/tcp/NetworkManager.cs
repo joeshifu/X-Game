@@ -160,6 +160,4 @@ namespace LuaFramework
             Debug.Log("~NetworkManager was destroy");
         }
     }
-
-
 }

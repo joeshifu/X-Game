@@ -1,8 +1,4 @@
-﻿/* 
-    LuaFramework Code By Jarjin lee
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
