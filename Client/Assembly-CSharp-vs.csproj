@@ -253,10 +253,12 @@
      <Compile Include="Assets\Scripts\tcp\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\tcp\Req.cs" />
      <Compile Include="Assets\Scripts\tcp\TcpClient.cs" />
-     <Compile Include="Assets\Scripts\tcp\test\RSACrypto.cs" />
-     <Compile Include="Assets\Scripts\tcp\test\test3des.cs" />
+     <Compile Include="Assets\Scripts\tcp\test\testDES.cs" />
      <Compile Include="Assets\Scripts\tcp\test\testRSA.cs" />
      <Compile Include="Assets\Scripts\tcp\uTcpClient.cs" />
+     <Compile Include="Assets\Scripts\util\encrypt\BitCryto.cs" />
+     <Compile Include="Assets\Scripts\util\encrypt\DESCrypto.cs" />
+     <Compile Include="Assets\Scripts\util\encrypt\RSACrypto.cs" />
      <Compile Include="Assets\Scripts\util\fps\SetMaxFPS.cs" />
      <Compile Include="Assets\Scripts\util\fps\ShowFPS.cs" />
      <Compile Include="Assets\Scripts\util\ugui_event_helper\EventTriggerListener.cs" />

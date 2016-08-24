@@ -5,7 +5,7 @@ public class testRSA : MonoBehaviour
 {
     void Start()
     {
-        RSACrypto.Inst.GenKey();
+        RSACrypto.GenKey();
 
         //Create a UnicodeEncoder to convert between byte array and string.
         UnicodeEncoding ByteConverter = new UnicodeEncoding();
@@ -15,9 +15,9 @@ public class testRSA : MonoBehaviour
         byte[] encryptedData;
         byte[] decryptedData;
 
-        encryptedData = RSACrypto.Inst.RSAEncrypt(dataBytes, RSACrypto.Inst.m_publickey, false);
+        encryptedData = RSACrypto.RSAEncrypt(dataBytes, RSACrypto.m_publickey, false);
 
-        decryptedData = RSACrypto.Inst.RSADecrypt(encryptedData, RSACrypto.Inst.m_privateKey, false);
+        decryptedData = RSACrypto.RSADecrypt(encryptedData, RSACrypto.m_privateKey, false);
 
         Debug.Log("message:" + ByteConverter.GetString(decryptedData));
 

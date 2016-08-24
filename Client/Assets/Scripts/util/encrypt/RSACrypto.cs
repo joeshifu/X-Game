@@ -3,28 +3,15 @@ using System.Security.Cryptography;
 
 public class RSACrypto
 {
-    public string m_privateKey { get; set; }
-    public string m_publickey { get; set; }
+    static public string m_privateKey { get; set; }
+    static public string m_publickey { get; set; }
 
-    private static RSACrypto m_inst;
-    public static RSACrypto Inst
-    {
-        get
-        {
-            if (m_inst == null)
-            {
-                m_inst = new RSACrypto();
-            }
-            return m_inst;
-        }
-    }
-
-    public void GenKey()
+    static public void GenKey()
     {
         using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
         {
-            this.m_privateKey = RSA.ToXmlString(true);//私钥
-            this.m_publickey = RSA.ToXmlString(false);//公钥
+            m_privateKey = RSA.ToXmlString(true);//私钥
+            m_publickey = RSA.ToXmlString(false);//公钥
         }
     }
 
@@ -35,7 +22,7 @@ public class RSACrypto
     /// <param name="publicKey"></param>
     /// <param name="DoOAEPPadding"></param>
     /// <returns></returns>
-    public byte[] RSAEncrypt(byte[] dataBytes, string publicKey, bool DoOAEPPadding)
+    static public byte[] RSAEncrypt(byte[] dataBytes, string publicKey, bool DoOAEPPadding)
     {
         try
         {
@@ -67,7 +54,7 @@ public class RSACrypto
     /// <param name="privateKey"></param>
     /// <param name="DoOAEPPadding"></param>
     /// <returns></returns>
-    public byte[] RSADecrypt(byte[] dataBytes, string privateKey, bool DoOAEPPadding)
+    static public byte[] RSADecrypt(byte[] dataBytes, string privateKey, bool DoOAEPPadding)
     {
         try
         {
