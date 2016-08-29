@@ -93,12 +93,14 @@ public class DownloadTask
 /// </summary>
 public class DownloadMgr
 {
-    private static DownloadMgr instance;
-    public static DownloadMgr GetInstance()
+    private static DownloadMgr m_inst;
+    public static DownloadMgr Inst
     {
-        if (instance == null)
-            instance = new DownloadMgr();
-        return instance;
+		get{
+        if (m_inst == null)
+            m_inst = new DownloadMgr();
+        return m_inst;
+		}
     }
 
     private readonly WebClient mWebClient = new WebClient();
@@ -249,7 +251,7 @@ public class DownloadMgr
     /// <summary>
     /// 关闭
     /// </summary>
-    public void Dispose()
+    public void Destroy()
     {
         this.mWebClient.CancelAsync();
         this.mWebClient.Dispose();

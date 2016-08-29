@@ -1,9 +1,20 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\tcp\uTcpClient.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\versionMgr\DownloadMgr.cs">
     <Files>
-      <File FileName="Assets\Scripts\tcp\uTcpClient.cs" Line="194" Column="41" />
-      <File FileName="Assets\Scripts\tcp\NetworkManager.cs" Line="145" Column="30" />
+      <File FileName="Assets\LuaFramework\Scripts\Main.cs" Line="11" Column="36" />
+      <File FileName="Assets\LuaFramework\Scripts\Framework\AppFacade.cs" Line="32" Column="74" />
+      <File FileName="Assets\LuaFramework\Scripts\Controller\Command\StartUpCommand.cs" Line="5" Column="1" />
+      <File FileName="Assets\Scripts\tcp\NetworkManager.cs" Line="7" Column="23" />
+      <File FileName="Assets\Scripts\tcp\uTcpClient.cs" Line="192" Column="48" />
+      <File FileName="Assets\LuaFramework\Scripts\Controller\Command\StartVersionMgrCommand.cs" Line="46" Column="62" />
+      <File FileName="Assets\Scripts\versionMgr\VersionMgr.cs" Line="477" Column="14" />
+      <File FileName="Assets\LuaFramework\Scripts\ConstDefine\AppConst.cs" Line="8" Column="48" />
+      <File FileName="Assets\Scripts\versionMgr\DownloadMgr.cs" Line="128" Column="45" />
+      <File FileName="Assets\LuaFramework\Scripts\Framework\Core\Facade.cs" Line="29" Column="5" />
+      <File FileName="Assets\LuaFramework\Scripts\Controller\Command\SocketCommand.cs" Line="6" Column="1" />
+      <File FileName="Assets\Scripts\XPage\XPageMgr.cs" Line="126" Column="31" />
+      <File FileName="Assets\Scripts\XPage\XPage.cs" Line="86" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

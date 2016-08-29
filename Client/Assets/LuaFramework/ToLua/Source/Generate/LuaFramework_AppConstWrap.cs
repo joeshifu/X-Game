@@ -9,7 +9,7 @@ public class LuaFramework_AppConstWrap
 		L.BeginClass(typeof(LuaFramework.AppConst), typeof(System.Object));
 		L.RegFunction("New", _CreateLuaFramework_AppConst);
 		L.RegFunction("__tostring", Lua_ToString);
-		L.RegConstant("DebugMode", 1);
+		L.RegConstant("DebugMode", 0);
 		L.RegConstant("ExampleMode", 0);
 		L.RegConstant("UpdateMode", 0);
 		L.RegConstant("LuaByteMode", 0);

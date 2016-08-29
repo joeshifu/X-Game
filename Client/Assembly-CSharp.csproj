@@ -77,7 +77,6 @@
      <Compile Include="Assets\LuaFramework\Scripts\Network\ByteBuffer.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\Network\Converter.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\Network\Protocal.cs" />
-     <Compile Include="Assets\LuaFramework\Scripts\Network\SocketClient.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\Utility\LuaHelper.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\Utility\Util.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\View\AppView.cs" />

@@ -36,13 +36,18 @@ public class StartVersionMgrCommand : ControllerCommand
         if (data == null)
             return;
 
-        m_versionMgrGo = new GameObject();
-        m_versionMgrGo.name = "VersionMgr";
-        VersionMgr m_versionMgr = m_versionMgrGo.AddComponent<VersionMgr>();
-        m_versionMgr.InitStart(VersionMgrFinished);
-    }
-
-    /// <summary>
+		StartVersionCtrl();
+	}
+	
+	private void StartVersionCtrl()
+	{
+		m_versionMgrGo = new GameObject();
+		m_versionMgrGo.name = "VersionMgr";
+		VersionMgr m_versionMgr = m_versionMgrGo.AddComponent<VersionMgr>();
+		m_versionMgr.InitStart(VersionMgrFinished);
+	}
+	
+	/// <summary>
     /// 版本管理结束
     /// </summary>
     private void VersionMgrFinished()

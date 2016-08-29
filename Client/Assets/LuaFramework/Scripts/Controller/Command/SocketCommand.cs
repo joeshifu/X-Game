@@ -12,7 +12,8 @@ public class SocketCommand : ControllerCommand
         if (data == null) return;
         KeyValuePair<int, ByteBuffer> buffer = (KeyValuePair<int, ByteBuffer>)data;
         switch (buffer.Key)
-        {
+		{
+			//把packet.header.header，packet.data 抛到lua里面去处理
             default: Util.CallMethod("Network", "OnSocket", buffer.Key, buffer.Value); break;
         }
     }

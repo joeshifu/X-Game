@@ -230,8 +230,8 @@ public class VersionMgr : Manager
         DownloadTask _tempTask = new DownloadTask();
         _tempTask.Url = this.m_remoteUrl + m_versionTxtName;
 
-        DownloadMgr.GetInstance().InitDownloadCallBacks(this.ParseRemoteVersionData, this.OneTaskProgressChanged, null);
-        DownloadMgr.GetInstance().AsynDownLoadText(_tempTask);
+        DownloadMgr.Inst.InitDownloadCallBacks(this.ParseRemoteVersionData, this.OneTaskProgressChanged, null);
+		DownloadMgr.Inst.AsynDownLoadText(_tempTask);
     }
 
     private void ParseRemoteVersionData(string remoteData)
@@ -393,7 +393,6 @@ public class VersionMgr : Manager
                 Debug.Log("no res need to download");
                 this.AllDownloadTaskFinished(false);
             }
-
         }
         else if (level == EVersionUpdateLevel.NO_NEED_UPDATE)
         {
@@ -436,7 +435,7 @@ public class VersionMgr : Manager
         this.m_remoteVersionData = null;
 
         //释放downloadmgr
-        DownloadMgr.GetInstance().Dispose();
+		DownloadMgr.Inst.Destroy();
 
         if (m_versionMgrCallback != null)
             this.m_versionMgrCallback();
@@ -460,15 +459,15 @@ public class VersionMgr : Manager
             Directory.CreateDirectory(path);
         }
 
-        DownloadMgr.GetInstance().InitDownloadCallBacks(null, this.OneTaskProgressChanged, this.OneTaskFinished);
-        DownloadMgr.GetInstance().AsynDownLoadFile(firstTask);
+        DownloadMgr.Inst.InitDownloadCallBacks(null, this.OneTaskProgressChanged, this.OneTaskFinished);
+		DownloadMgr.Inst.AsynDownLoadFile(firstTask);
     }
 
     private void PopDownloadTask()
     {
         if (this.m_needDownloadTasks.Contains(this.m_currTask))
         {
-            DownloadTask firstTask = this.m_needDownloadTasks.Dequeue();
+            this.m_needDownloadTasks.Dequeue();
 
             if (this.m_needDownloadTasks.Count == 0)
             {

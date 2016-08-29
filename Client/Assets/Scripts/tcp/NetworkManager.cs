@@ -4,8 +4,6 @@ using NsTcpClient;
 using LuaInterface;
 using System.Runtime.InteropServices;
 
-
-
 namespace LuaFramework
 {
     public class NetworkManager : Manager
@@ -89,7 +87,6 @@ namespace LuaFramework
             uint dataCrc = (uint)mCrc.Value;
             if (packet.header.dataCrc32 == dataCrc)
             {
-                //把packet.header.header，packet.data 抛到lua里面去处理
                 ByteBuffer buffer = new ByteBuffer();
                 buffer.WriteBytes(packet.data);
                 KeyValuePair<int, ByteBuffer> _event = new KeyValuePair<int, ByteBuffer>(packet.header.header, buffer);
@@ -137,6 +134,7 @@ namespace LuaFramework
 
             // m_clientSocket.Send(data2, protoId);
         }
+
         public void SendMessage(string str_protoId, ByteBuffer buffer)
         {
             byte[] data = buffer.ToBytes();
@@ -144,7 +142,6 @@ namespace LuaFramework
             Debug.LogError(protoId+":" + data.Length);
             m_clientSocket.Send(data, protoId);
         }
-
 
         public void Unload()
         {
