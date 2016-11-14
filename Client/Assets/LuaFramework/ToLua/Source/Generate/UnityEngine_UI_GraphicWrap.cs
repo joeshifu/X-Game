@@ -12,6 +12,8 @@ public class UnityEngine_UI_GraphicWrap
 		L.RegFunction("SetVerticesDirty", SetVerticesDirty);
 		L.RegFunction("SetMaterialDirty", SetMaterialDirty);
 		L.RegFunction("Rebuild", Rebuild);
+		L.RegFunction("LayoutComplete", LayoutComplete);
+		L.RegFunction("GraphicUpdateComplete", GraphicUpdateComplete);
 		L.RegFunction("SetNativeSize", SetNativeSize);
 		L.RegFunction("Raycast", Raycast);
 		L.RegFunction("PixelAdjustPoint", PixelAdjustPoint);
@@ -28,6 +30,7 @@ public class UnityEngine_UI_GraphicWrap
 		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("defaultGraphicMaterial", get_defaultGraphicMaterial, null);
 		L.RegVar("color", get_color, set_color);
+		L.RegVar("raycastTarget", get_raycastTarget, set_raycastTarget);
 		L.RegVar("depth", get_depth, null);
 		L.RegVar("rectTransform", get_rectTransform, null);
 		L.RegVar("canvas", get_canvas, null);
@@ -121,6 +124,38 @@ public class UnityEngine_UI_GraphicWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LayoutComplete(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.Graphic));
+			obj.LayoutComplete();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GraphicUpdateComplete(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.Graphic));
+			obj.GraphicUpdateComplete();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int SetNativeSize(IntPtr L)
 	{
 		try
@@ -195,14 +230,33 @@ public class UnityEngine_UI_GraphicWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 5);
-			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.Graphic));
-			UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
-			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
-			bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
-			bool arg3 = LuaDLL.luaL_checkboolean(L, 5);
-			obj.CrossFadeColor(arg0, arg1, arg2, arg3);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 5 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.UI.Graphic), typeof(UnityEngine.Color), typeof(float), typeof(bool), typeof(bool)))
+			{
+				UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.ToObject(L, 1);
+				UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+				float arg1 = (float)LuaDLL.lua_tonumber(L, 3);
+				bool arg2 = LuaDLL.lua_toboolean(L, 4);
+				bool arg3 = LuaDLL.lua_toboolean(L, 5);
+				obj.CrossFadeColor(arg0, arg1, arg2, arg3);
+				return 0;
+			}
+			else if (count == 6 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.UI.Graphic), typeof(UnityEngine.Color), typeof(float), typeof(bool), typeof(bool), typeof(bool)))
+			{
+				UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.ToObject(L, 1);
+				UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+				float arg1 = (float)LuaDLL.lua_tonumber(L, 3);
+				bool arg2 = LuaDLL.lua_toboolean(L, 4);
+				bool arg3 = LuaDLL.lua_toboolean(L, 5);
+				bool arg4 = LuaDLL.lua_toboolean(L, 6);
+				obj.CrossFadeColor(arg0, arg1, arg2, arg3, arg4);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.UI.Graphic.CrossFadeColor");
+			}
 		}
 		catch(Exception e)
 		{
@@ -472,6 +526,25 @@ public class UnityEngine_UI_GraphicWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_raycastTarget(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)o;
+			bool ret = obj.raycastTarget;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index raycastTarget on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_depth(IntPtr L)
 	{
 		object o = null;
@@ -639,6 +712,25 @@ public class UnityEngine_UI_GraphicWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index color on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_raycastTarget(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.raycastTarget = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index raycastTarget on a nil value" : e.Message);
 		}
 	}
 

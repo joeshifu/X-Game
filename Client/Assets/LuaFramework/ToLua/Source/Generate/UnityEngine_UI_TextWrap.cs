@@ -16,7 +16,6 @@ public class UnityEngine_UI_TextWrap
 		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("cachedTextGenerator", get_cachedTextGenerator, null);
 		L.RegVar("cachedTextGeneratorForLayout", get_cachedTextGeneratorForLayout, null);
-		L.RegVar("defaultMaterial", get_defaultMaterial, null);
 		L.RegVar("mainTexture", get_mainTexture, null);
 		L.RegVar("font", get_font, set_font);
 		L.RegVar("text", get_text, set_text);
@@ -25,6 +24,7 @@ public class UnityEngine_UI_TextWrap
 		L.RegVar("resizeTextMinSize", get_resizeTextMinSize, set_resizeTextMinSize);
 		L.RegVar("resizeTextMaxSize", get_resizeTextMaxSize, set_resizeTextMaxSize);
 		L.RegVar("alignment", get_alignment, set_alignment);
+		L.RegVar("alignByGeometry", get_alignByGeometry, set_alignByGeometry);
 		L.RegVar("fontSize", get_fontSize, set_fontSize);
 		L.RegVar("horizontalOverflow", get_horizontalOverflow, set_horizontalOverflow);
 		L.RegVar("verticalOverflow", get_verticalOverflow, set_verticalOverflow);
@@ -198,25 +198,6 @@ public class UnityEngine_UI_TextWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_defaultMaterial(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.UI.Text obj = (UnityEngine.UI.Text)o;
-			UnityEngine.Material ret = obj.defaultMaterial;
-			ToLua.Push(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultMaterial on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_mainTexture(IntPtr L)
 	{
 		object o = null;
@@ -365,6 +346,25 @@ public class UnityEngine_UI_TextWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index alignment on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_alignByGeometry(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.Text obj = (UnityEngine.UI.Text)o;
+			bool ret = obj.alignByGeometry;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index alignByGeometry on a nil value" : e.Message);
 		}
 	}
 
@@ -745,6 +745,25 @@ public class UnityEngine_UI_TextWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index alignment on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_alignByGeometry(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.Text obj = (UnityEngine.UI.Text)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.alignByGeometry = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index alignByGeometry on a nil value" : e.Message);
 		}
 	}
 

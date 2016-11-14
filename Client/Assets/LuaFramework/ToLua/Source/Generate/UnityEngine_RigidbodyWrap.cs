@@ -22,6 +22,8 @@ public class UnityEngine_RigidbodyWrap
 		L.RegFunction("Sleep", Sleep);
 		L.RegFunction("IsSleeping", IsSleeping);
 		L.RegFunction("WakeUp", WakeUp);
+		L.RegFunction("ResetCenterOfMass", ResetCenterOfMass);
+		L.RegFunction("ResetInertiaTensor", ResetInertiaTensor);
 		L.RegFunction("SweepTest", SweepTest);
 		L.RegFunction("SweepTestAll", SweepTestAll);
 		L.RegFunction("New", _CreateUnityEngine_Rigidbody);
@@ -47,7 +49,8 @@ public class UnityEngine_RigidbodyWrap
 		L.RegVar("position", get_position, set_position);
 		L.RegVar("rotation", get_rotation, set_rotation);
 		L.RegVar("interpolation", get_interpolation, set_interpolation);
-		L.RegVar("solverIterationCount", get_solverIterationCount, set_solverIterationCount);
+		L.RegVar("solverIterations", get_solverIterations, set_solverIterations);
+		L.RegVar("solverVelocityIterations", get_solverVelocityIterations, set_solverVelocityIterations);
 		L.RegVar("sleepThreshold", get_sleepThreshold, set_sleepThreshold);
 		L.RegVar("maxAngularVelocity", get_maxAngularVelocity, set_maxAngularVelocity);
 		L.EndClass();
@@ -523,6 +526,38 @@ public class UnityEngine_RigidbodyWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ResetCenterOfMass(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)ToLua.CheckObject(L, 1, typeof(UnityEngine.Rigidbody));
+			obj.ResetCenterOfMass();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ResetInertiaTensor(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)ToLua.CheckObject(L, 1, typeof(UnityEngine.Rigidbody));
+			obj.ResetInertiaTensor();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int SweepTest(IntPtr L)
 	{
 		try
@@ -546,6 +581,18 @@ public class UnityEngine_RigidbodyWrap
 				UnityEngine.RaycastHit arg1;
 				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
 				bool o = obj.SweepTest(arg0, out arg1, arg2);
+				LuaDLL.lua_pushboolean(L, o);
+				ToLua.Push(L, arg1);
+				return 2;
+			}
+			else if (count == 5 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Rigidbody), typeof(UnityEngine.Vector3), typeof(LuaInterface.LuaOut<UnityEngine.RaycastHit>), typeof(float), typeof(UnityEngine.QueryTriggerInteraction)))
+			{
+				UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)ToLua.ToObject(L, 1);
+				UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+				UnityEngine.RaycastHit arg1;
+				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
+				UnityEngine.QueryTriggerInteraction arg3 = (UnityEngine.QueryTriggerInteraction)ToLua.ToObject(L, 5);
+				bool o = obj.SweepTest(arg0, out arg1, arg2, arg3);
 				LuaDLL.lua_pushboolean(L, o);
 				ToLua.Push(L, arg1);
 				return 2;
@@ -582,6 +629,16 @@ public class UnityEngine_RigidbodyWrap
 				UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
 				float arg1 = (float)LuaDLL.lua_tonumber(L, 3);
 				UnityEngine.RaycastHit[] o = obj.SweepTestAll(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Rigidbody), typeof(UnityEngine.Vector3), typeof(float), typeof(UnityEngine.QueryTriggerInteraction)))
+			{
+				UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)ToLua.ToObject(L, 1);
+				UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+				float arg1 = (float)LuaDLL.lua_tonumber(L, 3);
+				UnityEngine.QueryTriggerInteraction arg2 = (UnityEngine.QueryTriggerInteraction)ToLua.ToObject(L, 4);
+				UnityEngine.RaycastHit[] o = obj.SweepTestAll(arg0, arg1, arg2);
 				ToLua.Push(L, o);
 				return 1;
 			}
@@ -1012,7 +1069,7 @@ public class UnityEngine_RigidbodyWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_solverIterationCount(IntPtr L)
+	static int get_solverIterations(IntPtr L)
 	{
 		object o = null;
 
@@ -1020,13 +1077,32 @@ public class UnityEngine_RigidbodyWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)o;
-			int ret = obj.solverIterationCount;
+			int ret = obj.solverIterations;
 			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index solverIterationCount on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index solverIterations on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_solverVelocityIterations(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)o;
+			int ret = obj.solverVelocityIterations;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index solverVelocityIterations on a nil value" : e.Message);
 		}
 	}
 
@@ -1430,7 +1506,7 @@ public class UnityEngine_RigidbodyWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_solverIterationCount(IntPtr L)
+	static int set_solverIterations(IntPtr L)
 	{
 		object o = null;
 
@@ -1439,12 +1515,31 @@ public class UnityEngine_RigidbodyWrap
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)o;
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			obj.solverIterationCount = arg0;
+			obj.solverIterations = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index solverIterationCount on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index solverIterations on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_solverVelocityIterations(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Rigidbody obj = (UnityEngine.Rigidbody)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.solverVelocityIterations = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index solverVelocityIterations on a nil value" : e.Message);
 		}
 	}
 

@@ -36,6 +36,8 @@ public class UnityEngine_InputWrap
 		L.RegVar("accelerationEventCount", get_accelerationEventCount, null);
 		L.RegVar("touches", get_touches, null);
 		L.RegVar("touchCount", get_touchCount, null);
+		L.RegVar("touchPressureSupported", get_touchPressureSupported, null);
+		L.RegVar("stylusTouchSupported", get_stylusTouchSupported, null);
 		L.RegVar("touchSupported", get_touchSupported, null);
 		L.RegVar("multiTouchEnabled", get_multiTouchEnabled, set_multiTouchEnabled);
 		L.RegVar("location", get_location, null);
@@ -45,6 +47,7 @@ public class UnityEngine_InputWrap
 		L.RegVar("compositionString", get_compositionString, null);
 		L.RegVar("imeIsSelected", get_imeIsSelected, null);
 		L.RegVar("compositionCursorPos", get_compositionCursorPos, set_compositionCursorPos);
+		L.RegVar("backButtonLeavesApp", get_backButtonLeavesApp, set_backButtonLeavesApp);
 		L.EndStaticLibs();
 	}
 
@@ -542,6 +545,34 @@ public class UnityEngine_InputWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_touchPressureSupported(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, UnityEngine.Input.touchPressureSupported);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_stylusTouchSupported(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, UnityEngine.Input.stylusTouchSupported);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_touchSupported(IntPtr L)
 	{
 		try
@@ -668,6 +699,20 @@ public class UnityEngine_InputWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_backButtonLeavesApp(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, UnityEngine.Input.backButtonLeavesApp);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_compensateSensors(IntPtr L)
 	{
 		try
@@ -734,6 +779,21 @@ public class UnityEngine_InputWrap
 		{
 			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
 			UnityEngine.Input.compositionCursorPos = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_backButtonLeavesApp(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			UnityEngine.Input.backButtonLeavesApp = arg0;
 			return 0;
 		}
 		catch(Exception e)

@@ -11,6 +11,11 @@ public class UnityEngine_CameraWrap
 		L.RegFunction("ResetWorldToCameraMatrix", ResetWorldToCameraMatrix);
 		L.RegFunction("ResetProjectionMatrix", ResetProjectionMatrix);
 		L.RegFunction("ResetAspect", ResetAspect);
+		L.RegFunction("ResetFieldOfView", ResetFieldOfView);
+		L.RegFunction("SetStereoViewMatrices", SetStereoViewMatrices);
+		L.RegFunction("ResetStereoViewMatrices", ResetStereoViewMatrices);
+		L.RegFunction("SetStereoProjectionMatrices", SetStereoProjectionMatrices);
+		L.RegFunction("ResetStereoProjectionMatrices", ResetStereoProjectionMatrices);
 		L.RegFunction("WorldToScreenPoint", WorldToScreenPoint);
 		L.RegFunction("WorldToViewportPoint", WorldToViewportPoint);
 		L.RegFunction("ViewportToWorldPoint", ViewportToWorldPoint);
@@ -24,6 +29,7 @@ public class UnityEngine_CameraWrap
 		L.RegFunction("RenderWithShader", RenderWithShader);
 		L.RegFunction("SetReplacementShader", SetReplacementShader);
 		L.RegFunction("ResetReplacementShader", ResetReplacementShader);
+		L.RegFunction("ResetCullingMatrix", ResetCullingMatrix);
 		L.RegFunction("RenderDontRestore", RenderDontRestore);
 		L.RegFunction("SetupCurrent", SetupCurrent);
 		L.RegFunction("RenderToCubemap", RenderToCubemap);
@@ -48,6 +54,7 @@ public class UnityEngine_CameraWrap
 		L.RegVar("hdr", get_hdr, set_hdr);
 		L.RegVar("orthographicSize", get_orthographicSize, set_orthographicSize);
 		L.RegVar("orthographic", get_orthographic, set_orthographic);
+		L.RegVar("opaqueSortMode", get_opaqueSortMode, set_opaqueSortMode);
 		L.RegVar("transparencySortMode", get_transparencySortMode, set_transparencySortMode);
 		L.RegVar("depth", get_depth, set_depth);
 		L.RegVar("aspect", get_aspect, set_aspect);
@@ -62,18 +69,22 @@ public class UnityEngine_CameraWrap
 		L.RegVar("cameraToWorldMatrix", get_cameraToWorldMatrix, null);
 		L.RegVar("worldToCameraMatrix", get_worldToCameraMatrix, set_worldToCameraMatrix);
 		L.RegVar("projectionMatrix", get_projectionMatrix, set_projectionMatrix);
+		L.RegVar("nonJitteredProjectionMatrix", get_nonJitteredProjectionMatrix, set_nonJitteredProjectionMatrix);
 		L.RegVar("velocity", get_velocity, null);
 		L.RegVar("clearFlags", get_clearFlags, set_clearFlags);
 		L.RegVar("stereoEnabled", get_stereoEnabled, null);
 		L.RegVar("stereoSeparation", get_stereoSeparation, set_stereoSeparation);
 		L.RegVar("stereoConvergence", get_stereoConvergence, set_stereoConvergence);
+		L.RegVar("cameraType", get_cameraType, set_cameraType);
 		L.RegVar("stereoMirrorMode", get_stereoMirrorMode, set_stereoMirrorMode);
+		L.RegVar("stereoTargetEye", get_stereoTargetEye, set_stereoTargetEye);
 		L.RegVar("targetDisplay", get_targetDisplay, set_targetDisplay);
 		L.RegVar("main", get_main, null);
 		L.RegVar("current", get_current, null);
 		L.RegVar("allCameras", get_allCameras, null);
 		L.RegVar("allCamerasCount", get_allCamerasCount, null);
 		L.RegVar("useOcclusionCulling", get_useOcclusionCulling, set_useOcclusionCulling);
+		L.RegVar("cullingMatrix", get_cullingMatrix, set_cullingMatrix);
 		L.RegVar("layerCullDistances", get_layerCullDistances, set_layerCullDistances);
 		L.RegVar("layerCullSpherical", get_layerCullSpherical, set_layerCullSpherical);
 		L.RegVar("depthTextureMode", get_depthTextureMode, set_depthTextureMode);
@@ -181,6 +192,90 @@ public class UnityEngine_CameraWrap
 			ToLua.CheckArgsCount(L, 1);
 			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
 			obj.ResetAspect();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ResetFieldOfView(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+			obj.ResetFieldOfView();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetStereoViewMatrices(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+			UnityEngine.Matrix4x4 arg0 = (UnityEngine.Matrix4x4)ToLua.CheckObject(L, 2, typeof(UnityEngine.Matrix4x4));
+			UnityEngine.Matrix4x4 arg1 = (UnityEngine.Matrix4x4)ToLua.CheckObject(L, 3, typeof(UnityEngine.Matrix4x4));
+			obj.SetStereoViewMatrices(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ResetStereoViewMatrices(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+			obj.ResetStereoViewMatrices();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetStereoProjectionMatrices(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+			UnityEngine.Matrix4x4 arg0 = (UnityEngine.Matrix4x4)ToLua.CheckObject(L, 2, typeof(UnityEngine.Matrix4x4));
+			UnityEngine.Matrix4x4 arg1 = (UnityEngine.Matrix4x4)ToLua.CheckObject(L, 3, typeof(UnityEngine.Matrix4x4));
+			obj.SetStereoProjectionMatrices(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ResetStereoProjectionMatrices(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+			obj.ResetStereoProjectionMatrices();
 			return 0;
 		}
 		catch(Exception e)
@@ -410,6 +505,22 @@ public class UnityEngine_CameraWrap
 			ToLua.CheckArgsCount(L, 1);
 			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
 			obj.ResetReplacementShader();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ResetCullingMatrix(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+			obj.ResetCullingMatrix();
 			return 0;
 		}
 		catch(Exception e)
@@ -854,6 +965,25 @@ public class UnityEngine_CameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_opaqueSortMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.Rendering.OpaqueSortMode ret = obj.opaqueSortMode;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index opaqueSortMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_transparencySortMode(IntPtr L)
 	{
 		object o = null;
@@ -1120,6 +1250,25 @@ public class UnityEngine_CameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_nonJitteredProjectionMatrix(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.Matrix4x4 ret = obj.nonJitteredProjectionMatrix;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index nonJitteredProjectionMatrix on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_velocity(IntPtr L)
 	{
 		object o = null;
@@ -1215,6 +1364,25 @@ public class UnityEngine_CameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_cameraType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.CameraType ret = obj.cameraType;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index cameraType on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_stereoMirrorMode(IntPtr L)
 	{
 		object o = null;
@@ -1230,6 +1398,25 @@ public class UnityEngine_CameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index stereoMirrorMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_stereoTargetEye(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.StereoTargetEyeMask ret = obj.stereoTargetEye;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index stereoTargetEye on a nil value" : e.Message);
 		}
 	}
 
@@ -1324,6 +1511,25 @@ public class UnityEngine_CameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index useOcclusionCulling on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_cullingMatrix(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.Matrix4x4 ret = obj.cullingMatrix;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index cullingMatrix on a nil value" : e.Message);
 		}
 	}
 
@@ -1637,6 +1843,25 @@ public class UnityEngine_CameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_opaqueSortMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.Rendering.OpaqueSortMode arg0 = (UnityEngine.Rendering.OpaqueSortMode)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.OpaqueSortMode));
+			obj.opaqueSortMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index opaqueSortMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_transparencySortMode(IntPtr L)
 	{
 		object o = null;
@@ -1846,6 +2071,25 @@ public class UnityEngine_CameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_nonJitteredProjectionMatrix(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.Matrix4x4 arg0 = (UnityEngine.Matrix4x4)ToLua.CheckObject(L, 2, typeof(UnityEngine.Matrix4x4));
+			obj.nonJitteredProjectionMatrix = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index nonJitteredProjectionMatrix on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_clearFlags(IntPtr L)
 	{
 		object o = null;
@@ -1903,6 +2147,25 @@ public class UnityEngine_CameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_cameraType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.CameraType arg0 = (UnityEngine.CameraType)ToLua.CheckObject(L, 2, typeof(UnityEngine.CameraType));
+			obj.cameraType = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index cameraType on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_stereoMirrorMode(IntPtr L)
 	{
 		object o = null;
@@ -1918,6 +2181,25 @@ public class UnityEngine_CameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index stereoMirrorMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_stereoTargetEye(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.StereoTargetEyeMask arg0 = (UnityEngine.StereoTargetEyeMask)ToLua.CheckObject(L, 2, typeof(UnityEngine.StereoTargetEyeMask));
+			obj.stereoTargetEye = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index stereoTargetEye on a nil value" : e.Message);
 		}
 	}
 
@@ -1956,6 +2238,25 @@ public class UnityEngine_CameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index useOcclusionCulling on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_cullingMatrix(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Camera obj = (UnityEngine.Camera)o;
+			UnityEngine.Matrix4x4 arg0 = (UnityEngine.Matrix4x4)ToLua.CheckObject(L, 2, typeof(UnityEngine.Matrix4x4));
+			obj.cullingMatrix = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index cullingMatrix on a nil value" : e.Message);
 		}
 	}
 

@@ -17,6 +17,8 @@ public class UnityEngine_QualitySettingsWrap
 		L.RegVar("shadowProjection", get_shadowProjection, set_shadowProjection);
 		L.RegVar("shadowCascades", get_shadowCascades, set_shadowCascades);
 		L.RegVar("shadowDistance", get_shadowDistance, set_shadowDistance);
+		L.RegVar("shadowResolution", get_shadowResolution, set_shadowResolution);
+		L.RegVar("shadowNearPlaneOffset", get_shadowNearPlaneOffset, set_shadowNearPlaneOffset);
 		L.RegVar("shadowCascade2Split", get_shadowCascade2Split, set_shadowCascade2Split);
 		L.RegVar("shadowCascade4Split", get_shadowCascade4Split, set_shadowCascade4Split);
 		L.RegVar("masterTextureLimit", get_masterTextureLimit, set_masterTextureLimit);
@@ -33,6 +35,8 @@ public class UnityEngine_QualitySettingsWrap
 		L.RegVar("desiredColorSpace", get_desiredColorSpace, null);
 		L.RegVar("activeColorSpace", get_activeColorSpace, null);
 		L.RegVar("blendWeights", get_blendWeights, set_blendWeights);
+		L.RegVar("asyncUploadTimeSlice", get_asyncUploadTimeSlice, set_asyncUploadTimeSlice);
+		L.RegVar("asyncUploadBufferSize", get_asyncUploadBufferSize, set_asyncUploadBufferSize);
 		L.EndStaticLibs();
 	}
 
@@ -221,6 +225,34 @@ public class UnityEngine_QualitySettingsWrap
 		try
 		{
 			LuaDLL.lua_pushnumber(L, UnityEngine.QualitySettings.shadowDistance);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_shadowResolution(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UnityEngine.QualitySettings.shadowResolution);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_shadowNearPlaneOffset(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushnumber(L, UnityEngine.QualitySettings.shadowNearPlaneOffset);
 			return 1;
 		}
 		catch(Exception e)
@@ -454,6 +486,34 @@ public class UnityEngine_QualitySettingsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_asyncUploadTimeSlice(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, UnityEngine.QualitySettings.asyncUploadTimeSlice);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_asyncUploadBufferSize(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, UnityEngine.QualitySettings.asyncUploadBufferSize);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_pixelLightCount(IntPtr L)
 	{
 		try
@@ -505,6 +565,36 @@ public class UnityEngine_QualitySettingsWrap
 		{
 			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
 			UnityEngine.QualitySettings.shadowDistance = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_shadowResolution(IntPtr L)
+	{
+		try
+		{
+			UnityEngine.ShadowResolution arg0 = (UnityEngine.ShadowResolution)ToLua.CheckObject(L, 2, typeof(UnityEngine.ShadowResolution));
+			UnityEngine.QualitySettings.shadowResolution = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_shadowNearPlaneOffset(IntPtr L)
+	{
+		try
+		{
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			UnityEngine.QualitySettings.shadowNearPlaneOffset = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -715,6 +805,36 @@ public class UnityEngine_QualitySettingsWrap
 		{
 			UnityEngine.BlendWeights arg0 = (UnityEngine.BlendWeights)ToLua.CheckObject(L, 2, typeof(UnityEngine.BlendWeights));
 			UnityEngine.QualitySettings.blendWeights = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_asyncUploadTimeSlice(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			UnityEngine.QualitySettings.asyncUploadTimeSlice = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_asyncUploadBufferSize(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			UnityEngine.QualitySettings.asyncUploadBufferSize = arg0;
 			return 0;
 		}
 		catch(Exception e)

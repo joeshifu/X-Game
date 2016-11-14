@@ -25,11 +25,13 @@ public class UnityEngine_RendererWrap
 		L.RegVar("sharedMaterials", get_sharedMaterials, set_sharedMaterials);
 		L.RegVar("bounds", get_bounds, null);
 		L.RegVar("lightmapIndex", get_lightmapIndex, set_lightmapIndex);
-		L.RegVar("realtimeLightmapIndex", get_realtimeLightmapIndex, null);
+		L.RegVar("realtimeLightmapIndex", get_realtimeLightmapIndex, set_realtimeLightmapIndex);
 		L.RegVar("lightmapScaleOffset", get_lightmapScaleOffset, set_lightmapScaleOffset);
+		L.RegVar("motionVectors", get_motionVectors, set_motionVectors);
 		L.RegVar("realtimeLightmapScaleOffset", get_realtimeLightmapScaleOffset, set_realtimeLightmapScaleOffset);
 		L.RegVar("isVisible", get_isVisible, null);
-		L.RegVar("useLightProbes", get_useLightProbes, set_useLightProbes);
+		L.RegVar("lightProbeUsage", get_lightProbeUsage, set_lightProbeUsage);
+		L.RegVar("lightProbeProxyVolumeOverride", get_lightProbeProxyVolumeOverride, set_lightProbeProxyVolumeOverride);
 		L.RegVar("probeAnchor", get_probeAnchor, set_probeAnchor);
 		L.RegVar("reflectionProbeUsage", get_reflectionProbeUsage, set_reflectionProbeUsage);
 		L.RegVar("sortingLayerName", get_sortingLayerName, set_sortingLayerName);
@@ -415,6 +417,25 @@ public class UnityEngine_RendererWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_motionVectors(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
+			bool ret = obj.motionVectors;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index motionVectors on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_realtimeLightmapScaleOffset(IntPtr L)
 	{
 		object o = null;
@@ -453,7 +474,7 @@ public class UnityEngine_RendererWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_useLightProbes(IntPtr L)
+	static int get_lightProbeUsage(IntPtr L)
 	{
 		object o = null;
 
@@ -461,13 +482,32 @@ public class UnityEngine_RendererWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
-			bool ret = obj.useLightProbes;
-			LuaDLL.lua_pushboolean(L, ret);
+			UnityEngine.Rendering.LightProbeUsage ret = obj.lightProbeUsage;
+			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index useLightProbes on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index lightProbeUsage on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_lightProbeProxyVolumeOverride(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
+			UnityEngine.GameObject ret = obj.lightProbeProxyVolumeOverride;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index lightProbeProxyVolumeOverride on a nil value" : e.Message);
 		}
 	}
 
@@ -719,6 +759,25 @@ public class UnityEngine_RendererWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_realtimeLightmapIndex(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.realtimeLightmapIndex = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index realtimeLightmapIndex on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_lightmapScaleOffset(IntPtr L)
 	{
 		object o = null;
@@ -734,6 +793,25 @@ public class UnityEngine_RendererWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index lightmapScaleOffset on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_motionVectors(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.motionVectors = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index motionVectors on a nil value" : e.Message);
 		}
 	}
 
@@ -757,7 +835,7 @@ public class UnityEngine_RendererWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_useLightProbes(IntPtr L)
+	static int set_lightProbeUsage(IntPtr L)
 	{
 		object o = null;
 
@@ -765,13 +843,32 @@ public class UnityEngine_RendererWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.useLightProbes = arg0;
+			UnityEngine.Rendering.LightProbeUsage arg0 = (UnityEngine.Rendering.LightProbeUsage)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightProbeUsage));
+			obj.lightProbeUsage = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index useLightProbes on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index lightProbeUsage on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_lightProbeProxyVolumeOverride(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
+			obj.lightProbeProxyVolumeOverride = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index lightProbeProxyVolumeOverride on a nil value" : e.Message);
 		}
 	}
 

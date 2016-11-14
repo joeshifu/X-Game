@@ -29,17 +29,34 @@ public class UnityEngine_ParticleSystemWrap
 		L.RegVar("duration", get_duration, null);
 		L.RegVar("playbackSpeed", get_playbackSpeed, set_playbackSpeed);
 		L.RegVar("particleCount", get_particleCount, null);
-		L.RegVar("enableEmission", get_enableEmission, set_enableEmission);
-		L.RegVar("emissionRate", get_emissionRate, set_emissionRate);
 		L.RegVar("startSpeed", get_startSpeed, set_startSpeed);
 		L.RegVar("startSize", get_startSize, set_startSize);
 		L.RegVar("startColor", get_startColor, set_startColor);
 		L.RegVar("startRotation", get_startRotation, set_startRotation);
+		L.RegVar("startRotation3D", get_startRotation3D, set_startRotation3D);
 		L.RegVar("startLifetime", get_startLifetime, set_startLifetime);
 		L.RegVar("gravityModifier", get_gravityModifier, set_gravityModifier);
 		L.RegVar("maxParticles", get_maxParticles, set_maxParticles);
 		L.RegVar("simulationSpace", get_simulationSpace, set_simulationSpace);
+		L.RegVar("scalingMode", get_scalingMode, set_scalingMode);
 		L.RegVar("randomSeed", get_randomSeed, set_randomSeed);
+		L.RegVar("emission", get_emission, null);
+		L.RegVar("shape", get_shape, null);
+		L.RegVar("velocityOverLifetime", get_velocityOverLifetime, null);
+		L.RegVar("limitVelocityOverLifetime", get_limitVelocityOverLifetime, null);
+		L.RegVar("inheritVelocity", get_inheritVelocity, null);
+		L.RegVar("forceOverLifetime", get_forceOverLifetime, null);
+		L.RegVar("colorOverLifetime", get_colorOverLifetime, null);
+		L.RegVar("colorBySpeed", get_colorBySpeed, null);
+		L.RegVar("sizeOverLifetime", get_sizeOverLifetime, null);
+		L.RegVar("sizeBySpeed", get_sizeBySpeed, null);
+		L.RegVar("rotationOverLifetime", get_rotationOverLifetime, null);
+		L.RegVar("rotationBySpeed", get_rotationBySpeed, null);
+		L.RegVar("externalForces", get_externalForces, null);
+		L.RegVar("collision", get_collision, null);
+		L.RegVar("trigger", get_trigger, null);
+		L.RegVar("subEmitters", get_subEmitters, null);
+		L.RegVar("textureSheetAnimation", get_textureSheetAnimation, null);
 		L.EndClass();
 	}
 
@@ -132,6 +149,16 @@ public class UnityEngine_ParticleSystemWrap
 				bool arg1 = LuaDLL.lua_toboolean(L, 3);
 				bool arg2 = LuaDLL.lua_toboolean(L, 4);
 				obj.Simulate(arg0, arg1, arg2);
+				return 0;
+			}
+			else if (count == 5 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.ParticleSystem), typeof(float), typeof(bool), typeof(bool), typeof(bool)))
+			{
+				UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)ToLua.ToObject(L, 1);
+				float arg0 = (float)LuaDLL.lua_tonumber(L, 2);
+				bool arg1 = LuaDLL.lua_toboolean(L, 3);
+				bool arg2 = LuaDLL.lua_toboolean(L, 4);
+				bool arg3 = LuaDLL.lua_toboolean(L, 5);
+				obj.Simulate(arg0, arg1, arg2, arg3);
 				return 0;
 			}
 			else
@@ -309,29 +336,19 @@ public class UnityEngine_ParticleSystemWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.ParticleSystem), typeof(UnityEngine.ParticleSystem.Particle)))
-			{
-				UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)ToLua.ToObject(L, 1);
-				UnityEngine.ParticleSystem.Particle arg0 = (UnityEngine.ParticleSystem.Particle)ToLua.ToObject(L, 2);
-				obj.Emit(arg0);
-				return 0;
-			}
-			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.ParticleSystem), typeof(int)))
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.ParticleSystem), typeof(int)))
 			{
 				UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)ToLua.ToObject(L, 1);
 				int arg0 = (int)LuaDLL.lua_tonumber(L, 2);
 				obj.Emit(arg0);
 				return 0;
 			}
-			else if (count == 6 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.ParticleSystem), typeof(UnityEngine.Vector3), typeof(UnityEngine.Vector3), typeof(float), typeof(float), typeof(UnityEngine.Color32)))
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.ParticleSystem), typeof(UnityEngine.ParticleSystem.EmitParams), typeof(int)))
 			{
 				UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)ToLua.ToObject(L, 1);
-				UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
-				UnityEngine.Vector3 arg1 = ToLua.ToVector3(L, 3);
-				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
-				float arg3 = (float)LuaDLL.lua_tonumber(L, 5);
-				UnityEngine.Color32 arg4 = (UnityEngine.Color32)ToLua.ToObject(L, 6);
-				obj.Emit(arg0, arg1, arg2, arg3, arg4);
+				UnityEngine.ParticleSystem.EmitParams arg0 = (UnityEngine.ParticleSystem.EmitParams)ToLua.ToObject(L, 2);
+				int arg1 = (int)LuaDLL.lua_tonumber(L, 3);
+				obj.Emit(arg0, arg1);
 				return 0;
 			}
 			else
@@ -571,44 +588,6 @@ public class UnityEngine_ParticleSystemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_enableEmission(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
-			bool ret = obj.enableEmission;
-			LuaDLL.lua_pushboolean(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index enableEmission on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_emissionRate(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
-			float ret = obj.emissionRate;
-			LuaDLL.lua_pushnumber(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index emissionRate on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_startSpeed(IntPtr L)
 	{
 		object o = null;
@@ -681,6 +660,25 @@ public class UnityEngine_ParticleSystemWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index startRotation on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_startRotation3D(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.Vector3 ret = obj.startRotation3D;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index startRotation3D on a nil value" : e.Message);
 		}
 	}
 
@@ -761,6 +759,25 @@ public class UnityEngine_ParticleSystemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_scalingMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystemScalingMode ret = obj.scalingMode;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index scalingMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_randomSeed(IntPtr L)
 	{
 		object o = null;
@@ -776,6 +793,329 @@ public class UnityEngine_ParticleSystemWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index randomSeed on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_emission(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.EmissionModule ret = obj.emission;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index emission on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_shape(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.ShapeModule ret = obj.shape;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index shape on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_velocityOverLifetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.VelocityOverLifetimeModule ret = obj.velocityOverLifetime;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index velocityOverLifetime on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_limitVelocityOverLifetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.LimitVelocityOverLifetimeModule ret = obj.limitVelocityOverLifetime;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index limitVelocityOverLifetime on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_inheritVelocity(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.InheritVelocityModule ret = obj.inheritVelocity;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index inheritVelocity on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_forceOverLifetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.ForceOverLifetimeModule ret = obj.forceOverLifetime;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index forceOverLifetime on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_colorOverLifetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.ColorOverLifetimeModule ret = obj.colorOverLifetime;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index colorOverLifetime on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_colorBySpeed(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.ColorBySpeedModule ret = obj.colorBySpeed;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index colorBySpeed on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_sizeOverLifetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.SizeOverLifetimeModule ret = obj.sizeOverLifetime;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sizeOverLifetime on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_sizeBySpeed(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.SizeBySpeedModule ret = obj.sizeBySpeed;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sizeBySpeed on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_rotationOverLifetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.RotationOverLifetimeModule ret = obj.rotationOverLifetime;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index rotationOverLifetime on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_rotationBySpeed(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.RotationBySpeedModule ret = obj.rotationBySpeed;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index rotationBySpeed on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_externalForces(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.ExternalForcesModule ret = obj.externalForces;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index externalForces on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_collision(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.CollisionModule ret = obj.collision;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index collision on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_trigger(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.TriggerModule ret = obj.trigger;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index trigger on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_subEmitters(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.SubEmittersModule ret = obj.subEmitters;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index subEmitters on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_textureSheetAnimation(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystem.TextureSheetAnimationModule ret = obj.textureSheetAnimation;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index textureSheetAnimation on a nil value" : e.Message);
 		}
 	}
 
@@ -875,44 +1215,6 @@ public class UnityEngine_ParticleSystemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_enableEmission(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.enableEmission = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index enableEmission on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_emissionRate(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
-			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
-			obj.emissionRate = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index emissionRate on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_startSpeed(IntPtr L)
 	{
 		object o = null;
@@ -989,6 +1291,25 @@ public class UnityEngine_ParticleSystemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_startRotation3D(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			obj.startRotation3D = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index startRotation3D on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_startLifetime(IntPtr L)
 	{
 		object o = null;
@@ -1061,6 +1382,25 @@ public class UnityEngine_ParticleSystemWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index simulationSpace on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_scalingMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)o;
+			UnityEngine.ParticleSystemScalingMode arg0 = (UnityEngine.ParticleSystemScalingMode)ToLua.CheckObject(L, 2, typeof(UnityEngine.ParticleSystemScalingMode));
+			obj.scalingMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index scalingMode on a nil value" : e.Message);
 		}
 	}
 

@@ -296,12 +296,29 @@ public class UnityEngine_Texture2DWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.Texture2D obj = (UnityEngine.Texture2D)ToLua.CheckObject(L, 1, typeof(UnityEngine.Texture2D));
-			byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
-			bool o = obj.LoadImage(arg0);
-			LuaDLL.lua_pushboolean(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Texture2D), typeof(byte[])))
+			{
+				UnityEngine.Texture2D obj = (UnityEngine.Texture2D)ToLua.ToObject(L, 1);
+				byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
+				bool o = obj.LoadImage(arg0);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Texture2D), typeof(byte[]), typeof(bool)))
+			{
+				UnityEngine.Texture2D obj = (UnityEngine.Texture2D)ToLua.ToObject(L, 1);
+				byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
+				bool arg1 = LuaDLL.lua_toboolean(L, 3);
+				bool o = obj.LoadImage(arg0, arg1);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Texture2D.LoadImage");
+			}
 		}
 		catch(Exception e)
 		{
@@ -314,11 +331,27 @@ public class UnityEngine_Texture2DWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.Texture2D obj = (UnityEngine.Texture2D)ToLua.CheckObject(L, 1, typeof(UnityEngine.Texture2D));
-			byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
-			obj.LoadRawTextureData(arg0);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Texture2D), typeof(byte[])))
+			{
+				UnityEngine.Texture2D obj = (UnityEngine.Texture2D)ToLua.ToObject(L, 1);
+				byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
+				obj.LoadRawTextureData(arg0);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Texture2D), typeof(System.IntPtr), typeof(int)))
+			{
+				UnityEngine.Texture2D obj = (UnityEngine.Texture2D)ToLua.ToObject(L, 1);
+				System.IntPtr arg0 = (System.IntPtr)LuaDLL.lua_touserdata(L, 2);
+				int arg1 = (int)LuaDLL.lua_tonumber(L, 3);
+				obj.LoadRawTextureData(arg0, arg1);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Texture2D.LoadRawTextureData");
+			}
 		}
 		catch(Exception e)
 		{

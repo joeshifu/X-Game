@@ -33,6 +33,7 @@ public class UnityEngine_GameObjectWrap
 		L.RegVar("activeInHierarchy", get_activeInHierarchy, null);
 		L.RegVar("isStatic", get_isStatic, set_isStatic);
 		L.RegVar("tag", get_tag, set_tag);
+		L.RegVar("scene", get_scene, null);
 		L.RegVar("gameObject", get_gameObject, null);
 		L.EndClass();
 	}
@@ -132,12 +133,29 @@ public class UnityEngine_GameObjectWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.GameObject obj = (UnityEngine.GameObject)ToLua.CheckObject(L, 1, typeof(UnityEngine.GameObject));
-			System.Type arg0 = (System.Type)ToLua.CheckObject(L, 2, typeof(System.Type));
-			UnityEngine.Component o = obj.GetComponentInChildren(arg0);
-			ToLua.Push(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.GameObject), typeof(System.Type)))
+			{
+				UnityEngine.GameObject obj = (UnityEngine.GameObject)ToLua.ToObject(L, 1);
+				System.Type arg0 = (System.Type)ToLua.ToObject(L, 2);
+				UnityEngine.Component o = obj.GetComponentInChildren(arg0);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.GameObject), typeof(System.Type), typeof(bool)))
+			{
+				UnityEngine.GameObject obj = (UnityEngine.GameObject)ToLua.ToObject(L, 1);
+				System.Type arg0 = (System.Type)ToLua.ToObject(L, 2);
+				bool arg1 = LuaDLL.lua_toboolean(L, 3);
+				UnityEngine.Component o = obj.GetComponentInChildren(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.GameObject.GetComponentInChildren");
+			}
 		}
 		catch(Exception e)
 		{
@@ -722,6 +740,25 @@ public class UnityEngine_GameObjectWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index tag on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_scene(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.GameObject obj = (UnityEngine.GameObject)o;
+			UnityEngine.SceneManagement.Scene ret = obj.scene;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index scene on a nil value" : e.Message);
 		}
 	}
 

@@ -9,14 +9,16 @@ public class UnityEngine_UI_InputFieldWrap
 		L.BeginClass(typeof(UnityEngine.UI.InputField), typeof(UnityEngine.UI.Selectable));
 		L.RegFunction("MoveTextEnd", MoveTextEnd);
 		L.RegFunction("MoveTextStart", MoveTextStart);
-		L.RegFunction("ScreenToLocal", ScreenToLocal);
 		L.RegFunction("OnBeginDrag", OnBeginDrag);
 		L.RegFunction("OnDrag", OnDrag);
 		L.RegFunction("OnEndDrag", OnEndDrag);
 		L.RegFunction("OnPointerDown", OnPointerDown);
 		L.RegFunction("ProcessEvent", ProcessEvent);
 		L.RegFunction("OnUpdateSelected", OnUpdateSelected);
+		L.RegFunction("ForceLabelUpdate", ForceLabelUpdate);
 		L.RegFunction("Rebuild", Rebuild);
+		L.RegFunction("LayoutComplete", LayoutComplete);
+		L.RegFunction("GraphicUpdateComplete", GraphicUpdateComplete);
 		L.RegFunction("ActivateInputField", ActivateInputField);
 		L.RegFunction("OnSelect", OnSelect);
 		L.RegFunction("OnPointerClick", OnPointerClick);
@@ -29,11 +31,14 @@ public class UnityEngine_UI_InputFieldWrap
 		L.RegVar("text", get_text, set_text);
 		L.RegVar("isFocused", get_isFocused, null);
 		L.RegVar("caretBlinkRate", get_caretBlinkRate, set_caretBlinkRate);
+		L.RegVar("caretWidth", get_caretWidth, set_caretWidth);
 		L.RegVar("textComponent", get_textComponent, set_textComponent);
 		L.RegVar("placeholder", get_placeholder, set_placeholder);
+		L.RegVar("caretColor", get_caretColor, set_caretColor);
+		L.RegVar("customCaretColor", get_customCaretColor, set_customCaretColor);
 		L.RegVar("selectionColor", get_selectionColor, set_selectionColor);
 		L.RegVar("onEndEdit", get_onEndEdit, set_onEndEdit);
-		L.RegVar("onValueChange", get_onValueChange, set_onValueChange);
+		L.RegVar("onValueChanged", get_onValueChanged, set_onValueChanged);
 		L.RegVar("onValidateInput", get_onValidateInput, set_onValidateInput);
 		L.RegVar("characterLimit", get_characterLimit, set_characterLimit);
 		L.RegVar("contentType", get_contentType, set_contentType);
@@ -41,6 +46,7 @@ public class UnityEngine_UI_InputFieldWrap
 		L.RegVar("inputType", get_inputType, set_inputType);
 		L.RegVar("keyboardType", get_keyboardType, set_keyboardType);
 		L.RegVar("characterValidation", get_characterValidation, set_characterValidation);
+		L.RegVar("readOnly", get_readOnly, set_readOnly);
 		L.RegVar("multiLine", get_multiLine, null);
 		L.RegVar("asteriskChar", get_asteriskChar, set_asteriskChar);
 		L.RegVar("wasCanceled", get_wasCanceled, null);
@@ -78,24 +84,6 @@ public class UnityEngine_UI_InputFieldWrap
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			obj.MoveTextStart(arg0);
 			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ScreenToLocal(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.InputField));
-			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
-			UnityEngine.Vector2 o = obj.ScreenToLocal(arg0);
-			ToLua.Push(L, o);
-			return 1;
 		}
 		catch(Exception e)
 		{
@@ -206,6 +194,22 @@ public class UnityEngine_UI_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ForceLabelUpdate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.InputField));
+			obj.ForceLabelUpdate();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int Rebuild(IntPtr L)
 	{
 		try
@@ -214,6 +218,38 @@ public class UnityEngine_UI_InputFieldWrap
 			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.InputField));
 			UnityEngine.UI.CanvasUpdate arg0 = (UnityEngine.UI.CanvasUpdate)ToLua.CheckObject(L, 2, typeof(UnityEngine.UI.CanvasUpdate));
 			obj.Rebuild(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LayoutComplete(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.InputField));
+			obj.LayoutComplete();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GraphicUpdateComplete(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.InputField));
+			obj.GraphicUpdateComplete();
 			return 0;
 		}
 		catch(Exception e)
@@ -434,6 +470,25 @@ public class UnityEngine_UI_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_caretWidth(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			int ret = obj.caretWidth;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index caretWidth on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_textComponent(IntPtr L)
 	{
 		object o = null;
@@ -468,6 +523,44 @@ public class UnityEngine_UI_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index placeholder on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_caretColor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			UnityEngine.Color ret = obj.caretColor;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index caretColor on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_customCaretColor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			bool ret = obj.customCaretColor;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index customCaretColor on a nil value" : e.Message);
 		}
 	}
 
@@ -510,7 +603,7 @@ public class UnityEngine_UI_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_onValueChange(IntPtr L)
+	static int get_onValueChanged(IntPtr L)
 	{
 		object o = null;
 
@@ -518,13 +611,13 @@ public class UnityEngine_UI_InputFieldWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
-			UnityEngine.UI.InputField.OnChangeEvent ret = obj.onValueChange;
+			UnityEngine.UI.InputField.OnChangeEvent ret = obj.onValueChanged;
 			ToLua.PushObject(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onValueChange on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onValueChanged on a nil value" : e.Message);
 		}
 	}
 
@@ -658,6 +751,25 @@ public class UnityEngine_UI_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index characterValidation on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_readOnly(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			bool ret = obj.readOnly;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index readOnly on a nil value" : e.Message);
 		}
 	}
 
@@ -833,6 +945,25 @@ public class UnityEngine_UI_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_caretWidth(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.caretWidth = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index caretWidth on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_textComponent(IntPtr L)
 	{
 		object o = null;
@@ -867,6 +998,44 @@ public class UnityEngine_UI_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index placeholder on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_caretColor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+			obj.caretColor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index caretColor on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_customCaretColor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.customCaretColor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index customCaretColor on a nil value" : e.Message);
 		}
 	}
 
@@ -909,7 +1078,7 @@ public class UnityEngine_UI_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_onValueChange(IntPtr L)
+	static int set_onValueChanged(IntPtr L)
 	{
 		object o = null;
 
@@ -918,12 +1087,12 @@ public class UnityEngine_UI_InputFieldWrap
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
 			UnityEngine.UI.InputField.OnChangeEvent arg0 = (UnityEngine.UI.InputField.OnChangeEvent)ToLua.CheckObject(L, 2, typeof(UnityEngine.UI.InputField.OnChangeEvent));
-			obj.onValueChange = arg0;
+			obj.onValueChanged = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onValueChange on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onValueChanged on a nil value" : e.Message);
 		}
 	}
 
@@ -1069,6 +1238,25 @@ public class UnityEngine_UI_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index characterValidation on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_readOnly(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.readOnly = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index readOnly on a nil value" : e.Message);
 		}
 	}
 

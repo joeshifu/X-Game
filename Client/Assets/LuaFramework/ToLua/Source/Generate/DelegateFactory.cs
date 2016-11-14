@@ -21,6 +21,7 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Events.UnityAction), UnityEngine_Events_UnityAction);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LogCallback), UnityEngine_Application_LogCallback);
+		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), UnityEngine_AudioClip_PCMSetPositionCallback);
 		dict.Add(typeof(UnityEngine.RectTransform.ReapplyDrivenProperties), UnityEngine_RectTransform_ReapplyDrivenProperties);
@@ -161,6 +162,33 @@ public static class DelegateFactory
 		}
 
 		UnityEngine.Application.LogCallback d = (new UnityEngine_Application_LogCallback_Event(func)).Call;
+		return d;
+	}
+
+	class UnityEngine_Application_AdvertisingIdentifierCallback_Event : LuaDelegate
+	{
+		public UnityEngine_Application_AdvertisingIdentifierCallback_Event(LuaFunction func) : base(func) { }
+
+		public void Call(string param0,bool param1,string param2)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate UnityEngine_Application_AdvertisingIdentifierCallback(LuaFunction func)
+	{
+		if (func == null)
+		{
+			UnityEngine.Application.AdvertisingIdentifierCallback fn = delegate { };
+			return fn;
+		}
+
+		UnityEngine.Application.AdvertisingIdentifierCallback d = (new UnityEngine_Application_AdvertisingIdentifierCallback_Event(func)).Call;
 		return d;
 	}
 

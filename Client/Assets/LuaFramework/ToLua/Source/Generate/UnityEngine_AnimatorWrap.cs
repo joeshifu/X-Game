@@ -6,7 +6,7 @@ public class UnityEngine_AnimatorWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(UnityEngine.Animator), typeof(UnityEngine.Behaviour));
+		L.BeginClass(typeof(UnityEngine.Animator), typeof(UnityEngine.Experimental.Director.DirectorPlayer));
 		L.RegFunction("GetFloat", GetFloat);
 		L.RegFunction("SetFloat", SetFloat);
 		L.RegFunction("GetBool", GetBool);
@@ -30,6 +30,7 @@ public class UnityEngine_AnimatorWrap
 		L.RegFunction("SetIKHintPositionWeight", SetIKHintPositionWeight);
 		L.RegFunction("SetLookAtPosition", SetLookAtPosition);
 		L.RegFunction("SetLookAtWeight", SetLookAtWeight);
+		L.RegFunction("SetBoneLocalRotation", SetBoneLocalRotation);
 		L.RegFunction("GetLayerName", GetLayerName);
 		L.RegFunction("GetLayerIndex", GetLayerIndex);
 		L.RegFunction("GetLayerWeight", GetLayerWeight);
@@ -40,6 +41,7 @@ public class UnityEngine_AnimatorWrap
 		L.RegFunction("GetCurrentAnimatorClipInfo", GetCurrentAnimatorClipInfo);
 		L.RegFunction("GetNextAnimatorClipInfo", GetNextAnimatorClipInfo);
 		L.RegFunction("IsInTransition", IsInTransition);
+		L.RegFunction("GetParameter", GetParameter);
 		L.RegFunction("MatchTarget", MatchTarget);
 		L.RegFunction("InterruptMatchTarget", InterruptMatchTarget);
 		L.RegFunction("CrossFadeInFixedTime", CrossFadeInFixedTime);
@@ -64,6 +66,7 @@ public class UnityEngine_AnimatorWrap
 		L.RegVar("isHuman", get_isHuman, null);
 		L.RegVar("hasRootMotion", get_hasRootMotion, null);
 		L.RegVar("humanScale", get_humanScale, null);
+		L.RegVar("isInitialized", get_isInitialized, null);
 		L.RegVar("deltaPosition", get_deltaPosition, null);
 		L.RegVar("deltaRotation", get_deltaRotation, null);
 		L.RegVar("velocity", get_velocity, null);
@@ -80,6 +83,7 @@ public class UnityEngine_AnimatorWrap
 		L.RegVar("stabilizeFeet", get_stabilizeFeet, set_stabilizeFeet);
 		L.RegVar("layerCount", get_layerCount, null);
 		L.RegVar("parameters", get_parameters, null);
+		L.RegVar("parameterCount", get_parameterCount, null);
 		L.RegVar("feetPivotActive", get_feetPivotActive, set_feetPivotActive);
 		L.RegVar("pivotWeight", get_pivotWeight, null);
 		L.RegVar("pivotPosition", get_pivotPosition, null);
@@ -745,6 +749,24 @@ public class UnityEngine_AnimatorWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetBoneLocalRotation(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			UnityEngine.Animator obj = (UnityEngine.Animator)ToLua.CheckObject(L, 1, typeof(UnityEngine.Animator));
+			UnityEngine.HumanBodyBones arg0 = (UnityEngine.HumanBodyBones)ToLua.CheckObject(L, 2, typeof(UnityEngine.HumanBodyBones));
+			UnityEngine.Quaternion arg1 = ToLua.ToQuaternion(L, 3);
+			obj.SetBoneLocalRotation(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int GetLayerName(IntPtr L)
 	{
 		try
@@ -916,6 +938,24 @@ public class UnityEngine_AnimatorWrap
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			bool o = obj.IsInTransition(arg0);
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetParameter(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.Animator obj = (UnityEngine.Animator)ToLua.CheckObject(L, 1, typeof(UnityEngine.Animator));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			UnityEngine.AnimatorControllerParameter o = obj.GetParameter(arg0);
+			ToLua.PushObject(L, o);
 			return 1;
 		}
 		catch(Exception e)
@@ -1213,7 +1253,14 @@ public class UnityEngine_AnimatorWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Animator), typeof(int)))
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Animator), typeof(UnityEngine.Experimental.Director.Playable)))
+			{
+				UnityEngine.Animator obj = (UnityEngine.Animator)ToLua.ToObject(L, 1);
+				UnityEngine.Experimental.Director.Playable arg0 = (UnityEngine.Experimental.Director.Playable)ToLua.ToObject(L, 2);
+				obj.Play(arg0);
+				return 0;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Animator), typeof(int)))
 			{
 				UnityEngine.Animator obj = (UnityEngine.Animator)ToLua.ToObject(L, 1);
 				int arg0 = (int)LuaDLL.lua_tonumber(L, 2);
@@ -1570,6 +1617,25 @@ public class UnityEngine_AnimatorWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isInitialized(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Animator obj = (UnityEngine.Animator)o;
+			bool ret = obj.isInitialized;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isInitialized on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_deltaPosition(IntPtr L)
 	{
 		object o = null;
@@ -1870,6 +1936,25 @@ public class UnityEngine_AnimatorWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index parameters on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_parameterCount(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Animator obj = (UnityEngine.Animator)o;
+			int ret = obj.parameterCount;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index parameterCount on a nil value" : e.Message);
 		}
 	}
 

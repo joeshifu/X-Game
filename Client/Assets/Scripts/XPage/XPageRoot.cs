@@ -112,6 +112,8 @@ public class XPageRoot : MonoBehaviour
     {
         GameObject go = new GameObject("canvas");
         go.transform.parent = root;
+        go.transform.localPosition = Vector3.zero;
+        go.transform.localScale =Vector3.one;
         go.layer = LayerMask.NameToLayer("UI");
 
         Canvas can = go.AddComponent<Canvas>();

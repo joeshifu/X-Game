@@ -80,6 +80,11 @@ public static class LuaBinder
 		UnityEngine_UI_GraphicWrap.Register(L);
 		UnityEngine_UI_SelectableWrap.Register(L);
 		L.EndModule();
+		L.BeginModule("Experimental");
+		L.BeginModule("Director");
+		UnityEngine_Experimental_Director_DirectorPlayerWrap.Register(L);
+		L.EndModule();
+		L.EndModule();
 		L.BeginModule("EventSystems");
 		UnityEngine_EventSystems_UIBehaviourWrap.Register(L);
 		UnityEngine_EventSystems_EventTriggerWrap.Register(L);
